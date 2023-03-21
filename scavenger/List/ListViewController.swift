@@ -25,6 +25,7 @@ class ListViewController: UIViewController {
         images = Image.mockedLists
     
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
