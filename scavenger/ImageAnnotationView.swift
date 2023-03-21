@@ -106,9 +106,6 @@ class ImageAnnotationView: MKAnnotationView {
         ])
 
         // Offset the annotation view so the bottom pointer view points to the correct location.
-        // The annotation view is originally positioned with it's origin (i.e. top left most corner) placed at the given map coordinate.
-        // To compensate, we center the annotation view in the x-axis by moving it to the left by half of it's width.
-        // In the y-axis, we move the annotation view up (-y) by it's entire height, + the height that the pointer view extends.
         centerOffset = CGPoint(x: -(Constants.containerViewHeight / 2),
                                y: -Constants.containerViewHeight - Constants.pointerViewHeightAfterRotation)
 

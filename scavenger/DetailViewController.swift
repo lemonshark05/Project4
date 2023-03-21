@@ -57,29 +57,29 @@ class DetailViewController: UIViewController {
 
     @IBAction func didTapAttachPhotoButton(_ sender: Any) {
         if PHPhotoLibrary.authorizationStatus(for: .readWrite) != .authorized {
-            // Request photo library access
-            PHPhotoLibrary.requestAuthorization(for: .readWrite) { [weak self] status in
-                switch status {
-                case .authorized:
-                    // The user authorized access to their photo library
-                    // show picker (on main thread)
-                    DispatchQueue.main.async {
-                        self?.presentImagePicker()
+                    // Request photo library access
+                    PHPhotoLibrary.requestAuthorization(for: .readWrite) { [weak self] status in
+                        switch status {
+                        case .authorized:
+                            // The user authorized access to their photo library
+                            // show picker (on main thread)
+                            DispatchQueue.main.async {
+                                self?.presentImagePicker()
+                            }
+                        default:
+                            // show settings alert (on main thread)
+                            DispatchQueue.main.async {
+                                // Helper method to show settings alert
+                                self?.presentGoToSettingsAlert()
+                            }
+                        }
                     }
-                default:
-                    // show settings alert (on main thread)
-                    DispatchQueue.main.async {
-                        // Helper method to show settings alert
-                        self?.presentGoToSettingsAlert()
-                    }
+                } else {
+                    // Show photo picker
+                    presentImagePicker()
                 }
-            }
-        } else {
-            // Show photo picker
-            presentImagePicker()
-        }
     }
-
+    
     private func presentImagePicker() {
         // Create a configuration object
         var config = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())

@@ -15,11 +15,11 @@ class ListCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-    func configure(with task: Image) {
-        titleLabel.text = task.title
-        titleLabel.textColor = task.isComplete ? .secondaryLabel : .label
-        completedImage.image = UIImage(systemName: task.isComplete ? "circle.inset.filled" : "circle")?.withRenderingMode(.alwaysTemplate)
-        completedImage.tintColor = task.isComplete ? .systemBlue : .tertiaryLabel
+    func configure(with image: Image) {
+        titleLabel.text = image.title
+        titleLabel.textColor = image.isComplete ? .secondaryLabel : .label
+        completedImage.image = UIImage(systemName: image.isComplete ? "circle.inset.filled" : "circle")?.withRenderingMode(.alwaysTemplate)
+        completedImage.tintColor = image.isComplete ? .systemBlue : .tertiaryLabel
     }
 
 }
