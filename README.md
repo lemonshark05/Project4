@@ -18,7 +18,7 @@ The following **required** functionality is completed:
  
 The following **optional** features are implemented:
 
-- [ ] User can launch camera to snap a picture	
+- [x] User can launch camera to snap a picture	
 
 The following **additional** features are implemented:
 
@@ -33,8 +33,7 @@ Here's a walkthrough of implemented user stories:
 <!-- Replace this with whatever GIF tool you used! -->
 GIF created with ...  
 
-
-https://user-images.githubusercontent.com/100770743/226533459-6fe9491c-f5cd-4cd2-861b-2f2ed6e4742a.mp4
+https://user-images.githubusercontent.com/100770743/226536567-4934d153-ea85-410b-beda-1dab4953a8f0.mp4
 
 
 
