@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 import PhotosUI
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var completedImageView: UIImageView!
     @IBOutlet weak var completedLabel: UILabel!
@@ -57,6 +57,35 @@ class DetailViewController: UIViewController {
 
     @IBAction func didTapAttachPhotoButton(_ sender: Any) {
         if PHPhotoLibrary.authorizationStatus(for: .readWrite) != .authorized {
+            // Request photo library access
+            PHPhotoLibrary.requestAuthorization(for: .readWrite) { [weak self] status in
+                switch status {
+                    case .authorized:
+                        // The user authorized access to their photo library
+                        // show picker (on main thread)
+                        DispatchQueue.main.async {
+                            self?.presentImagePicker()
+                        }
+                    default:
+                        // show settings alert (on main thread)
+                        DispatchQueue.main.async {
+                            // Helper method to show settings alert
+                            self?.presentGoToSettingsAlert()
+                        }
+                    }
+                }
+            } else {
+                // Show photo picker
+                presentImagePicker()
+            }
+    }
+    
+    private func presentImagePicker() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+            // Add "Choose from Library" option
+            let chooseAction = UIAlertAction(title: "Choose from Library", style: .default) { [weak self] _ in
+                if PHPhotoLibrary.authorizationStatus(for: .readWrite) != .authorized {
                     // Request photo library access
                     PHPhotoLibrary.requestAuthorization(for: .readWrite) { [weak self] status in
                         switch status {
@@ -64,7 +93,7 @@ class DetailViewController: UIViewController {
                             // The user authorized access to their photo library
                             // show picker (on main thread)
                             DispatchQueue.main.async {
-                                self?.presentImagePicker()
+                                self?.showPhotoPicker()
                             }
                         default:
                             // show settings alert (on main thread)
@@ -76,11 +105,26 @@ class DetailViewController: UIViewController {
                     }
                 } else {
                     // Show photo picker
-                    presentImagePicker()
+                    self?.showPhotoPicker()
                 }
+            }
+            alertController.addAction(chooseAction)
+
+            // Add "Take Photo" option
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                let takePhotoAction = UIAlertAction(title: "Take Photo", style: .default) { [weak self] _ in
+                    self?.showCamera()
+                }
+                alertController.addAction(takePhotoAction)
+            }
+
+            // Add "Cancel" option
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            alertController.addAction(cancelAction)
+
+            present(alertController, animated: true)
     }
-    
-    private func presentImagePicker() {
+    private func showPhotoPicker() {
         // Create a configuration object
         var config = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
 
@@ -101,9 +145,15 @@ class DetailViewController: UIViewController {
 
         // Present the picker.
         present(picker, animated: true)
-
     }
 
+    private func showCamera() {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.sourceType = .camera
+        picker.allowsEditing = true
+        present(picker, animated: true)
+    }
     func updateMapView() {
         // Make sure the task has image location.
         guard let imageLocation = image.imageLocation else { return }
