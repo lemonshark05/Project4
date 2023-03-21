@@ -10,11 +10,11 @@ Time spent: **X** hours spent in total
 
 The following **required** functionality is completed:
 
-- [ ] App displays list of hard-coded tasks
-- [ ] When a task is tapped it navigates the user to a task detail view
-- [ ] When user adds photo to complete the tasks, it marks the task as complete
-- [ ] When adding photo of task, the location is added
-- [ ] User returns to home page (list of tasks) and the status of your task is updated to complete
+- [x] App displays list of hard-coded tasks
+- [x] When a task is tapped it navigates the user to a task detail view
+- [x] When user adds photo to complete the tasks, it marks the task as complete
+- [x] When adding photo of task, the location is added
+- [x] User returns to home page (list of tasks) and the status of your task is updated to complete
  
 The following **optional** features are implemented:
 
@@ -22,7 +22,7 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
+- [x] adaptive layout
 
 ## Video Walkthrough
 
@@ -32,10 +32,11 @@ Here's a walkthrough of implemented user stories:
 
 <!-- Replace this with whatever GIF tool you used! -->
 GIF created with ...  
-<!-- Recommended tools:
-[Kap](https://getkap.co/) for macOS
-[ScreenToGif](https://www.screentogif.com/) for Windows
-[peek](https://github.com/phw/peek) for Linux. -->
+
+
+https://user-images.githubusercontent.com/100770743/226533459-6fe9491c-f5cd-4cd2-861b-2f2ed6e4742a.mp4
+
+
 
 ## Notes
 
@@ -43,7 +44,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2023] [zhimin meng]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
