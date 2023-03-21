@@ -41,13 +41,13 @@ class DetailViewController: UIViewController {
         titleLabel.text = image.title
         descriptionLabel.text = image.description
 
-        let completedImage = UIImage(systemName: image.isComplete ? "circle.inset.filled" : "circle")
+        let completedImage = UIImage(systemName: image.isComplete ? "checkmark.circle" : "circle")
 
         // calling `withRenderingMode(.alwaysTemplate)` on an image allows for coloring the image via it's `tintColor` property.
         completedImageView.image = completedImage?.withRenderingMode(.alwaysTemplate)
         completedLabel.text = image.isComplete ? "Complete" : "Incomplete"
 
-        let color: UIColor = image.isComplete ? .systemBlue : .tertiaryLabel
+        let color: UIColor = image.isComplete ? .systemRed : .systemGreen
         completedImageView.tintColor = color
         completedLabel.textColor = color
 

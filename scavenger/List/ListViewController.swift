@@ -7,26 +7,8 @@
 
 import UIKit
 
-class ListViewController: UIViewController, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return images.count
-    }
+class ListViewController: UIViewController {
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // the `dequeueReusableCell(withIdentifier:)` method just returns a generic UITableViewCell so it's necessary to cast it to our specific custom cell.
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as! ListCell
-
-        // Get the track that corresponds to the table view row
-        let image = images[indexPath.row]
-
-        // Configure the cell with it's associated track
-        cell.configure(with: image)
-
-        // return the cell for display in the table view
-        return cell
-    }
-    
-
     @IBOutlet weak var tableView: UITableView!
     
     var images = [Image]() {
@@ -43,18 +25,45 @@ class ListViewController: UIViewController, UITableViewDataSource {
         images = Image.mockedLists
     
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // This will reload data in order to reflect any changes made to a task after returning from the detail screen.
+        tableView.reloadData()
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the cell that triggered the segue
-        if let cell = sender as? UITableViewCell,
-           // Get the index path of the cell from the table view
-           let indexPath = tableView.indexPath(for: cell),
-           // Get the detail view controller
-           let detailViewController = segue.destination as? DetailViewController {
-            
-            let image = images[indexPath.row]
-            
-            detailViewController.image = image
+
+        // Segue to Detail View Controller
+        if segue.identifier == "DetailSegue" {
+            if let detailViewController = segue.destination as? DetailViewController,
+                // Get the index path for the current selected table view row.
+               let selectedIndexPath = tableView.indexPathForSelectedRow {
+
+                // Get the task associated with the slected index path
+                let image = images[selectedIndexPath.row]
+
+                // Set the selected task on the detail view controller.
+                detailViewController.image = image
+            }
         }
+    }
+    
+}
+extension ListViewController: UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return images.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as? ListCell else {
+            fatalError("Unable to dequeue List Cell")
+        }
+
+        cell.configure(with: images[indexPath.row])
+
+        return cell
     }
 }
